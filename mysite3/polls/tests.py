@@ -9,6 +9,9 @@ from django.utils import timezone
 
 from .models import Question
 
+from django.test import TestCase
+
+
 
 class QuestionMethodTests(TestCase):
 
@@ -29,3 +32,26 @@ class QuestionMethodTests(TestCase):
 	    time = timezone.now() - datetime.timedelta(days=30)
 	    old_question = Question(pub_date=time)
 	    self.assertIs(old_question.was_published_recently(), False)
+
+class QuestionTestCase(TestCase):
+    def setUp(self):
+        Question.objects.create(question_text="which class is the most difficult", pub_date = timezone.now())
+	
+        
+    def test_question_name(self):
+        """Animals that can speak are correctly identified"""
+        q = Question.objects.get(question_text= "which class is the most difficult")
+	
+        self.assertEqual(q.question_text ,  "which class is the most difficult")
+
+    def create_question(self, title="only a test", pub_date = timezone.now()):
+        return Question.objects.create(question_text= "which class is the most difficult", pub_date=pub_date)
+
+    def test_whatever_creation(self):
+        w = self.create_question()
+        self.assertTrue(isinstance(w, Question))
+        
+
+        
+
+        

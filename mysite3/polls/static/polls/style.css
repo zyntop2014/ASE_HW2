@@ -1,0 +1,18 @@
+li a {
+    color: white;
+}
+
+body {
+    background: white url("books.jpg") no-repeat right bottom;
+    font-size: 25px;
+}
+
+h1 {
+    color: yellow;
+    text-align: center;
+}
+
+p {
+    font-family: verdana;
+    font-size: 20px;
+}
