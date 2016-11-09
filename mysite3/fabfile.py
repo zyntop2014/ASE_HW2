@@ -1,4 +1,3 @@
-
 from __future__ import with_statement
 from fabric.api import *
 from fabric.contrib.console import confirm
@@ -14,7 +13,8 @@ def test():
             static_test()
 
 def static_test():
-	local("pylint polls")
+    with settings(warn_only=True):
+	   local("pylint polls")
 
 def pull():
     local("git pull")
