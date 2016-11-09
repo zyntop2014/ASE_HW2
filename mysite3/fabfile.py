@@ -27,7 +27,7 @@ def push():
 def commit():
     test()
     local("git add --all")
-    local ("git commit -m 'testing' ")
+    local ("git commit -m 'fabrictesting' ")
 
 def deploy():
     test()
