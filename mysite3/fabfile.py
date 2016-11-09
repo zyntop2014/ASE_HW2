@@ -1,35 +1,36 @@
 
 from __future__ import with_statement
-from fabric.api import local, settings, abort, sudo
+from fabric.api import *
 from fabric.contrib.console import confirm
 
-
 def test():
+    print "running all test cases"
     with settings(warn_only=True):
-        result = local('python3 manage.py test polls', capture=True)
-    if result.failed and not confirm("Tests failed. Continue anyway?"):
-        abort("Aborting at user request.")
+        result = local('python manage.py test polls', capture=True)
+    if result.failed:
+        abort("Testing failed, aborting......")
+    else:
+        if confirm("Tests succeeded. Continue to static testing?"):
+            static_test()
+
+def static_test():
+	local("pylint polls")
 
 def pull():
-    test()
     local("git pull")
-
-def commit():
     test()
-    local("git add .")
-    local ("git commit -m 'testing' ")
 
 def push():
     test()
     local("git push -u origin master")
 
-def prepare_deploy():
+def commit():
     test()
-    commit()
-    push()
+    local("git add --all")
+    local ("git commit -m 'testing' ")
 
 def deploy():
     test()
-    local("python3 manage.py runserver")
+    local("python manage.py runserver")
 
 
